@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Device } = require("../models");
 
-// ✅ Get all available devices
+//  Get all available devices
 router.get("/", async (req, res) => {
   try {
     const devices = await Device.findAll();

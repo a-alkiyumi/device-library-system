@@ -43,7 +43,7 @@ export default function MyBookings() {
       await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`);
 
       alert('Booking cancelled successfully.');
-      // ⬇️ Re-fetch bookings to refresh the list and device statuses
+      // Re-fetch bookings to refresh the list and device statuses
       fetchBookings();
     } catch (err) {
       console.error('Failed to cancel booking', err);

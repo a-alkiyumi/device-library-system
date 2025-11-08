@@ -1,4 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
+  
+  /**
+   * Booking Model
+   * ----------------
+   * Represents a record of a user borrowing a device.
+   * Each booking is associated with a specific device and user,
+   * including the borrowing and return dates.
+   */
+  
   const Booking = sequelize.define("Booking", {
     user_name: {
       type: DataTypes.STRING,

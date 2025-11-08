@@ -5,7 +5,7 @@ const db = require("../models"); // Import the entire models folder
 const Device = db.Device;
 const Booking = db.Booking;
 
-// ✅ GET /api/bookings?email=someone@example.com
+//  GET /api/bookings?email=someone@example.com
 router.get("/", async (req, res) => {
   try {
     const { email } = req.query; // read ?email=... from URL
@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ POST /api/bookings
+//  POST /api/bookings
 router.post("/", async (req, res) => {
   try {
     const { userName, userEmail, deviceId, startDate, endDate } = req.body;
