@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Devices', [
-      // 💻 Laptops
+      // Laptops
       {
         name: 'MacBook Pro M3',
         type: 'Laptop',
@@ -32,7 +32,7 @@ module.exports = {
         updatedAt: new Date(),
       },
 
-      // 📱 Smartphones
+      // Smartphones
       {
         name: 'iPhone 15 Pro',
         type: 'Smartphone',
@@ -52,7 +52,7 @@ module.exports = {
         updatedAt: new Date(),
       },
 
-      // 📱 Tablet
+      // Tablet
       {
         name: 'iPad Air',
         type: 'Tablet',
