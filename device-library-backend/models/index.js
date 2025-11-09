@@ -1,12 +1,12 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-// Create a new Sequelize instance (SQLite or your chosen DB)
+// Create a new Sequelize instance
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./database.sqlite", // Database file location
 });
 
-const db = {}; // define db before using it
+const db = {};
 
 // Import models
 db.Device = require("./device")(sequelize, DataTypes);
