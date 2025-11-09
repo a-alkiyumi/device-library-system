@@ -18,7 +18,7 @@ async function seed() {
     { name: 'Projector', type: 'Electronics', image: '', max_borrow_duration: 5 },
   ]);
 
-  console.log('✅ Database seeded successfully');
+  console.log('Database seeded successfully');
   process.exit();
 }
 
