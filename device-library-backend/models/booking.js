@@ -1,39 +1,29 @@
+'use strict';
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  
-  /**
-   * Booking Model
-   * ----------------
-   * Represents a record of a user borrowing a device.
-   * Each booking is associated with a specific device and user,
-   * including the borrowing and return dates.
-   */
-  
-  const Booking = sequelize.define("Booking", {
-    user_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  class Booking extends Model {}
+
+  Booking.init(
+    {
+      deviceId: { type: DataTypes.INTEGER, allowNull: false },
+      email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } },
+      firstName: { type: DataTypes.STRING, allowNull: false },
+      lastName: { type: DataTypes.STRING, allowNull: false },
+      bookedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+      dueDate: { type: DataTypes.DATE, allowNull: false },
+      returnedAt: { type: DataTypes.DATE, allowNull: true },
     },
-    user_email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    device_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    start_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    end_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "booked",
-    },
-  });
+    {
+      sequelize,
+      modelName: 'Booking',
+    }
+  );
+
+  Booking.associate = (models) => {
+    Booking.belongsTo(models.Device, { foreignKey: 'deviceId' });
+  };
 
   return Booking;
 };

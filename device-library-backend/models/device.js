@@ -1,26 +1,32 @@
+'use strict';
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  const Device = sequelize.define("Device", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  class Device extends Model {}
+
+  Device.init(
+    {
+      name: { type: DataTypes.STRING, allowNull: false },
+      category: { type: DataTypes.STRING, allowNull: false },
+      icon: { type: DataTypes.STRING, allowNull: false, defaultValue: '💻' },
+      description: { type: DataTypes.TEXT, allowNull: false },
+      maxLoanDays: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 7 },
+      status: {
+        type: DataTypes.ENUM('Available', 'Checked Out'),
+        allowNull: false,
+        defaultValue: 'Available',
+      },
     },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "available",
-    },
-    max_borrow_duration: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-  });
+    {
+      sequelize,
+      modelName: 'Device',
+    }
+  );
+
+  Device.associate = (models) => {
+    Device.hasMany(models.Booking, { foreignKey: 'deviceId' });
+  };
 
   return Device;
 };
