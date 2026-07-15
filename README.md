@@ -8,11 +8,12 @@ A simple device lending catalog. Browse available devices, see how long each one
 - **Device details** — full description, loan period, and (when checked out) the expected return date
 - **Book instantly** — reserve a device with first name, last name, and email
 - **My Bookings** — look up your bookings by email and return a device when you're done
+- **Email notifications** — confirmation emails on booking and on return
 
 ## Tech Stack
 
 - **Frontend**: React (Create React App), React Router
-- **Backend**: Express, Sequelize, SQLite
+- **Backend**: Express, Sequelize, SQLite, Nodemailer
 
 ## Project Structure
 
@@ -39,6 +40,10 @@ npm start
 ```
 
 Runs on `http://localhost:5000`. On first run it creates a local SQLite database (`database.sqlite`) and seeds it with sample devices and bookings.
+
+#### Email notifications (optional)
+
+Copy `.env.example` to `.env` and fill in `EMAIL_USER`/`EMAIL_PASS` with a Gmail address and an [App Password](https://myaccount.google.com/apppasswords) (not your regular password) to have booking/return confirmations actually emailed out. If left unset, the backend logs what it would have sent to the console instead — no setup required for local development.
 
 ### Frontend
 

@@ -2,10 +2,19 @@
 
 const express = require('express');
 const { Device, Booking } = require('../models');
+const { sendMail } = require('../mailer');
 
 const router = express.Router();
 
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 
 router.get('/', async (req, res) => {
   const devices = await Device.findAll({ order: [['id', 'ASC']] });
@@ -62,6 +71,14 @@ router.post('/:id/book', async (req, res) => {
 
   device.status = 'Checked Out';
   await device.save();
+
+  await sendMail({
+    to: booking.email,
+    subject: `Booking Confirmed: ${device.name}`,
+    text: `Hi ${booking.firstName},\n\nYou've successfully booked ${device.name}. It's reserved for you until ${formatDate(
+      booking.dueDate
+    )}.\n\nWhen you're done, return it any time from the My Bookings page using this email address.\n\n— Device Library`,
+  });
 
   res.status(201).json(booking);
 });

@@ -2,6 +2,7 @@
 
 const express = require('express');
 const { Booking, Device } = require('../models');
+const { sendMail } = require('../mailer');
 
 const router = express.Router();
 
@@ -34,6 +35,12 @@ router.post('/:id/return', async (req, res) => {
 
   booking.Device.status = 'Available';
   await booking.Device.save();
+
+  await sendMail({
+    to: booking.email,
+    subject: `Device Returned: ${booking.Device.name}`,
+    text: `Hi ${booking.firstName},\n\nThanks for returning ${booking.Device.name}. It's now available for the next person to book.\n\n— Device Library`,
+  });
 
   res.json(booking);
 });
