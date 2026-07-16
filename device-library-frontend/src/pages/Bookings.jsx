@@ -15,7 +15,6 @@ function Bookings() {
   const [bookings, setBookings] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [returningId, setReturningId] = useState(null);
 
   const lookup = async (targetEmail) => {
     const emailToUse = targetEmail || email;
@@ -42,21 +41,6 @@ function Bookings() {
   const handleSubmit = (e) => {
     e.preventDefault();
     lookup();
-  };
-
-  const handleReturn = async (bookingId) => {
-    setReturningId(bookingId);
-    setError(null);
-    try {
-      const res = await fetch(`/api/bookings/${bookingId}/return`, { method: 'POST' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Could not return device');
-      await lookup();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setReturningId(null);
-    }
   };
 
   return (
@@ -98,13 +82,7 @@ function Bookings() {
                 {b.returnedAt ? (
                   <span className="status status-available">Returned</span>
                 ) : (
-                  <button
-                    className="return-button"
-                    onClick={() => handleReturn(b.id)}
-                    disabled={returningId === b.id}
-                  >
-                    {returningId === b.id ? 'Returning...' : 'Return Device'}
-                  </button>
+                  <span className="return-hint">Use the return link from your confirmation email</span>
                 )}
               </div>
             ))}

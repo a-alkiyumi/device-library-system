@@ -420,6 +420,11 @@
   text-decoration: underline;
 }
 
+.booking-confirmation-note {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
 /* Bookings lookup page */
 .lookup-form {
   display: flex;
@@ -473,23 +478,9 @@
   font-size: 0.85rem;
 }
 
-.return-button {
-  background: var(--color-surface);
-  border: 1px solid var(--color-danger-text);
-  color: var(--color-danger-text);
-  font-weight: 600;
-  font-size: 0.85rem;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.return-button:hover {
-  background: var(--color-danger-bg);
-}
-
-.return-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.return-hint {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-align: right;
+  max-width: 160px;
 }

@@ -111,8 +111,14 @@ function DeviceDetail() {
               You're booked! <strong>{device.name}</strong> is reserved for {confirmation.firstName}, due back{' '}
               {formatDate(confirmation.dueDate)}.
             </p>
+            <p className="booking-confirmation-note">
+              A confirmation email with a return link is on its way to {confirmation.email}.
+            </p>
             <Link to={`/bookings?email=${encodeURIComponent(confirmation.email)}`}>
               View my bookings →
+            </Link>
+            <Link to={`/bookings/${confirmation.id}/return?token=${confirmation.returnToken}`}>
+              Return this device now →
             </Link>
           </div>
         ) : device.status === 'Available' ? (

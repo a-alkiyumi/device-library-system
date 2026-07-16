@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Devices from './pages/Devices';
 import DeviceDetail from './pages/DeviceDetail';
 import Bookings from './pages/Bookings';
+import ReturnConfirm from './pages/ReturnConfirm';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/devices" element={<Devices />} />
           <Route path="/devices/:id" element={<DeviceDetail />} />
           <Route path="/bookings" element={<Bookings />} />
+          <Route path="/bookings/:id/return" element={<ReturnConfirm />} />
         </Routes>
       </main>
     </BrowserRouter>

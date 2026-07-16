@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       bookedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
       dueDate: { type: DataTypes.DATE, allowNull: false },
       returnedAt: { type: DataTypes.DATE, allowNull: true },
+      returnToken: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

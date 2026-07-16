@@ -1,12 +1,14 @@
 'use strict';
 
 const express = require('express');
+const crypto = require('crypto');
 const { Device, Booking } = require('../models');
 const { sendMail } = require('../mailer');
 
 const router = express.Router();
 
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString(undefined, {
@@ -59,6 +61,7 @@ router.post('/:id/book', async (req, res) => {
 
   const bookedAt = new Date();
   const dueDate = new Date(bookedAt.getTime() + device.maxLoanDays * 24 * 60 * 60 * 1000);
+  const returnToken = crypto.randomBytes(12).toString('hex');
 
   const booking = await Booking.create({
     deviceId: device.id,
@@ -67,17 +70,20 @@ router.post('/:id/book', async (req, res) => {
     lastName: lastName.trim(),
     bookedAt,
     dueDate,
+    returnToken,
   });
 
   device.status = 'Checked Out';
   await device.save();
+
+  const returnLink = `${FRONTEND_URL}/bookings/${booking.id}/return?token=${returnToken}`;
 
   await sendMail({
     to: booking.email,
     subject: `Booking Confirmed: ${device.name}`,
     text: `Hi ${booking.firstName},\n\nYou've successfully booked ${device.name}. It's reserved for you until ${formatDate(
       booking.dueDate
-    )}.\n\nWhen you're done, return it any time from the My Bookings page using this email address.\n\n— Device Library`,
+    )}.\n\nWhen you're done, return it using this link:\n${returnLink}\n\n— Device Library`,
   });
 
   res.status(201).json(booking);

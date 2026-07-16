@@ -3,6 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const crypto = require('crypto');
 
 const { sequelize, Device, Booking } = require('./models');
 const devicesRouter = require('./routes/devices');
@@ -42,6 +43,7 @@ async function seed() {
       lastName: b.lastName,
       bookedAt,
       dueDate,
+      returnToken: crypto.randomBytes(12).toString('hex'),
     });
   }
 }

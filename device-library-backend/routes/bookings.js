@@ -16,18 +16,24 @@ router.get('/', async (req, res) => {
     where: { email: String(email).toLowerCase().trim() },
     include: [{ model: Device }],
     order: [['bookedAt', 'DESC']],
+    attributes: { exclude: ['returnToken'] },
   });
 
   res.json(bookings);
 });
 
 router.post('/:id/return', async (req, res) => {
+  const token = req.body?.token || req.query.token;
+
   const booking = await Booking.findByPk(req.params.id, { include: [{ model: Device }] });
   if (!booking) {
     return res.status(404).json({ error: 'Booking not found' });
   }
   if (booking.returnedAt) {
     return res.status(409).json({ error: 'This booking was already returned' });
+  }
+  if (!token || token !== booking.returnToken) {
+    return res.status(403).json({ error: 'Invalid or missing return link' });
   }
 
   booking.returnedAt = new Date();
