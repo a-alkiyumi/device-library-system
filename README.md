@@ -67,3 +67,7 @@ Runs on `http://localhost:3000` and proxies API requests to the backend on port 
 | POST | `/api/devices/:id/book` | Book a device — body: `{ email, firstName, lastName }`. Response includes a `returnToken` for immediate return. |
 | GET | `/api/bookings?email=` | List bookings for an email (view-only — does not include the return token) |
 | POST | `/api/bookings/:id/return` | Return a booked device — body: `{ token }`, must match the booking's `returnToken` |
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the project's history, including why it was rebuilt from scratch and the reasoning behind the return-token security fix.
